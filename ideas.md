@@ -20,8 +20,12 @@ This doc is a place for us to take some notes and plan out the lab.
 ##go build
 
 ###what are we building?
-
-???
+- start with a "hello, world"
+	- helloworld.go > main
+	- go install
+	- oh, a bin dir. PATH
+- lets build something useful
+	- ???
 
 ###what will be the results
 
