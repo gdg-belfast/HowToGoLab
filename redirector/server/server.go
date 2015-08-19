@@ -36,10 +36,3 @@ func Start(port int) error {
 
 	return nil
 }
-
-// Performs redirects
-func redirectHandler(w http.ResponseWriter, r *http.Request,
-	from string, to string, httpcode int) {
-	log.Printf("-> redirecting to %s", to)
-	http.Redirect(w, r, to, httpcode)
-}
