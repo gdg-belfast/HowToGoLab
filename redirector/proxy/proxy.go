@@ -2,37 +2,34 @@ package proxy
 
 import (
 	"fmt"
+	"github.com/gdg-belfast/HowToGoLab/redirector/db"
 	"net/http"
 )
-
-// Global map of desired redirects
-var Redirects map[string]string
-
-// Set the packages redirects
-func SetRedirects(routes map[string]string) {
-	Redirects = routes
-}
-
-// proxyLogger is just a placeholder. we could spit this out into I/O later
-func proxyLogger(s string) {
-	// just a simple stdout log for now
-	fmt.Println(s)
-}
 
 // handler catches all requests to our http.ListenAndServe. redirects if
 // defined, 404s if not
 func handler(w http.ResponseWriter, r *http.Request) {
+
+	// gather the redirects every time a request is made - not ideal, but
+	// ensures the data is up to date for now
+	redirects, err := db.Read()
+	if err != nil {
+		panic(err)
+	}
+
+	// if the request is known, redirect
 	path := r.Host + r.URL.Path
-	proxyLogger(fmt.Sprintf("requested %s", path))
-	if _, ok := Redirects[path]; ok {
-		url := Redirects[path]
-		proxyLogger(fmt.Sprintf(" ~> redirecting %s to %s", path, url))
+	fmt.Println(fmt.Sprintf("requested %s", path))
+	if _, ok := redirects[path]; ok {
+		url := redirects[path]
+		fmt.Println(fmt.Sprintf(" ~> redirecting %s to %s", path, url))
 		// redirect
 		w.Header().Set("Location", url)
 		w.WriteHeader(http.StatusMovedPermanently)
 		w.Write(nil)
 		return
 	}
+	fmt.Println("request doesnt match any redirects")
 	// 404
 	w.WriteHeader(http.StatusNotFound)
 	w.Write([]byte(fmt.Sprintf("{ StatusCode: %d }", http.StatusNotFound)))
@@ -41,11 +38,16 @@ func handler(w http.ResponseWriter, r *http.Request) {
 // Start our server
 func Start(port int) error {
 
-	http.HandleFunc("/", handler)
+	proxyMux := http.NewServeMux()
+
+	listenAddr := fmt.Sprintf(":%d", port)
+	fmt.Println(fmt.Sprintf("Proxy started: %s", listenAddr))
+
+	proxyMux.HandleFunc("/", handler)
 	// start listening
-	if err := http.ListenAndServe(fmt.Sprintf(":%d", port), nil); err != nil {
-		return err
-	}
+	go func() {
+		http.ListenAndServe(listenAddr, proxyMux)
+	}()
 
 	return nil
 }

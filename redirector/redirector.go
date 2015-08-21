@@ -1,22 +1,26 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gdg-belfast/HowToGoLab/redirector/admin"
-	"github.com/gdg-belfast/HowToGoLab/redirector/logger"
 	"github.com/gdg-belfast/HowToGoLab/redirector/proxy"
 )
 
 func main() {
 
-	// set the redirects
-	proxy.SetRedirects(map[string]string{
-		"127.0.0.1:8080/": "https://google.com",
-		"localhost:8080/": "https://rehabstudio.com",
-	})
+	finish := make(chan bool)
+
+	fmt.Println("[ Proxy demo ]")
 
 	// start proxy
-	proxy.Start(8080)
+	if err := proxy.Start(8080); err != nil {
+		panic(err)
+	}
 
 	// start admin
-	admin.Start(8000)
+	if err := admin.Start(8000); err != nil {
+		panic(err)
+	}
+
+	<-finish
 }
