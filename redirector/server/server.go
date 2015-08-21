@@ -13,15 +13,29 @@ func SetRedirects(routes map[string]string) {
 	Redirects = routes
 }
 
+// proxyLogger is just a placeholder. we could spit this out into I/O later
+func proxyLogger(s string) {
+	// just a simple stdout log for now
+	fmt.Println(s)
+}
+
+// handler catches all requests to our http.ListenAndServe. redirects if
+// defined, 404s if not
 func handler(w http.ResponseWriter, r *http.Request) {
-	if _, ok := Redirects[r.Host+r.URL.Path]; ok {
-		url := Redirects[r.Host+r.URL.Path]
+	path := r.Host + r.URL.Path
+	proxyLogger(fmt.Sprintf("requested %s", path))
+	if _, ok := Redirects[path]; ok {
+		url := Redirects[path]
+		proxyLogger(fmt.Sprintf(" ~> redirecting %s to %s", path, url))
+		// redirect
 		w.Header().Set("Location", url)
-		fmt.Println(url)
 		w.WriteHeader(http.StatusMovedPermanently)
 		w.Write(nil)
 		return
 	}
+	// 404
+	w.WriteHeader(http.StatusNotFound)
+	w.Write([]byte(fmt.Sprintf("{ StatusCode: %d }", http.StatusNotFound)))
 }
 
 // Start our server
