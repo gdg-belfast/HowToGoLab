@@ -13,10 +13,11 @@ func main() {
 
 	mux := http.NewServeMux()
 
-	// start proxy
+	// add proxy handlers
 	proxy.Start(mux)
-	// start admin
+	// add admin handlers
 	admin.Start(mux)
 
+	// start listening & serving
 	http.ListenAndServe(":8080", mux)
 }
