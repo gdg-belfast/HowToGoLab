@@ -2,6 +2,8 @@
 
 Super simple webserver & proxy, designed for an intro Golang workshop.
 
+This repo shouldn't be taken too seriously - it's purpose is solely to demo some features of Golang. There's no tests. No validation. No sanitisation.
+
 ##instructions
 
 - `go build`
