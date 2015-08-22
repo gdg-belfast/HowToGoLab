@@ -9,6 +9,7 @@ import (
 
 func handler(w http.ResponseWriter, r *http.Request) {
 
+	// has form data been submitted?
 	if r.Method == "POST" {
 		r.ParseForm()
 		fmt.Println("from:", r.Form["from[]"])
@@ -23,7 +24,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	// read data
+	// gather redirects from our database
 	data, err := db.Read()
 	if err != nil {
 		panic(err)
@@ -32,6 +33,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		Redirects map[string]string
 	}
 
+	// display something to the user
 	var templates = template.Must(template.ParseFiles("admin/view/form.html"))
 	if err := templates.ExecuteTemplate(w, "adminform", templateData{Redirects: data}); err != nil {
 		panic(err)

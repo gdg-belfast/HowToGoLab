@@ -6,6 +6,7 @@ This repo shouldn't be taken too seriously - it's purpose is solely to demo some
 
 ##instructions
 
+- make sure you are in the `./redirector` folder
 - `go build`
 - `./redirector`
 - go to [http://127.0.0.1:8080/admin](http://127.0.0.1:8080/admin)

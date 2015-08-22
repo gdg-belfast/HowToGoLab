@@ -25,7 +25,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(fmt.Sprintf(" ~> redirecting %s to %s", path, url))
 		// redirect
 		w.Header().Set("Location", url)
-		w.WriteHeader(http.StatusMovedPermanently)
+		w.WriteHeader(http.StatusFound)
 		w.Write(nil)
 		return
 	}
