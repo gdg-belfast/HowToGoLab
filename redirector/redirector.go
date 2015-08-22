@@ -4,23 +4,24 @@ import (
 	"fmt"
 	"github.com/gdg-belfast/HowToGoLab/redirector/admin"
 	"github.com/gdg-belfast/HowToGoLab/redirector/proxy"
+	"net/http"
 )
 
 func main() {
 
-	finish := make(chan bool)
-
 	fmt.Println("[ Proxy demo ]")
 
+	mux := http.NewServeMux()
+
 	// start proxy
-	if err := proxy.Start(8080); err != nil {
+	if err := proxy.Start(mux); err != nil {
 		panic(err)
 	}
 
 	// start admin
-	if err := admin.Start(8000); err != nil {
+	if err := admin.Start(mux); err != nil {
 		panic(err)
 	}
 
-	<-finish
+	http.ListenAndServe(":8080", mux)
 }

@@ -39,18 +39,11 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 // start a webserver that will allow us to administer our redirector
-func Start(port int) error {
+func Start(mux *http.ServeMux) error {
 
-	adminMux := http.NewServeMux()
+	fmt.Println("Adding admin handlers")
 
-	listenAddr := fmt.Sprintf(":%d", port)
-	fmt.Printf("Admin started: %s", listenAddr)
-
-	adminMux.HandleFunc("/", handler)
-
-	go func() {
-		http.ListenAndServe(listenAddr, adminMux)
-	}()
+	mux.HandleFunc("/admin", handler)
 
 	return nil
 }

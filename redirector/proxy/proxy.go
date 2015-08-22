@@ -36,18 +36,11 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 // Start our server
-func Start(port int) error {
+func Start(mux *http.ServeMux) error {
 
-	proxyMux := http.NewServeMux()
+	fmt.Println("Adding proxy handler")
 
-	listenAddr := fmt.Sprintf(":%d", port)
-	fmt.Println(fmt.Sprintf("Proxy started: %s", listenAddr))
-
-	proxyMux.HandleFunc("/", handler)
-	// start listening
-	go func() {
-		http.ListenAndServe(listenAddr, proxyMux)
-	}()
+	mux.HandleFunc("/", handler)
 
 	return nil
 }
