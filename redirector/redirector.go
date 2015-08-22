@@ -14,14 +14,9 @@ func main() {
 	mux := http.NewServeMux()
 
 	// start proxy
-	if err := proxy.Start(mux); err != nil {
-		panic(err)
-	}
-
+	proxy.Start(mux)
 	// start admin
-	if err := admin.Start(mux); err != nil {
-		panic(err)
-	}
+	admin.Start(mux)
 
 	http.ListenAndServe(":8080", mux)
 }

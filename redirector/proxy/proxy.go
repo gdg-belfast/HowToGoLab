@@ -36,11 +36,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 // Start our server
-func Start(mux *http.ServeMux) error {
+func Start(mux *http.ServeMux) {
 
 	fmt.Println("Adding proxy handler")
 
 	mux.HandleFunc("/", handler)
-
-	return nil
 }
