@@ -7,6 +7,18 @@ Speakers (GDG Belfast)
 - Peter McConnell
 - Simon Hewitt
 
+* What are we building?
+
+Building a small & useful app written in Go.
+
+Simple proxy with an admin interface
+
+Demo time
+
+The code for this project can be found at:
+
+.link https://github.com/gdg-belfast/HowToGoLab
+
 * Environment setup
 
 First - make sure you have installed everything:
