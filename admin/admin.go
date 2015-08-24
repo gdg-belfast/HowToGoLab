@@ -2,7 +2,7 @@ package admin
 
 import (
 	"fmt"
-	"github.com/gdg-belfast/HowToGoLab/redirector/db"
+	"github.com/gdg-belfast/HowToGoLab/redirector/usecases"
 	"html/template"
 	"net/http"
 )
