@@ -1,0 +1,65 @@
+{{define "adminform"}}
+<html>
+<head>
+<script type="text/javascript">
+function removeRedirect(e) {
+    e.parentNode.parentNode.removeChild(e.parentNode);
+    return false;
+}
+function addRedirect(e) {
+    var ul = document.getElementById("redirectsList");
+    if (ul) {
+        // create list item
+        var li = document.createElement('li');
+        li.appendChild(document.createTextNode("from:"));
+        var from = document.createElement("input")
+        from.name = "from[]"
+        from.value = e.parentNode.getElementsByTagName("input")[0].value;
+        li.appendChild(from);
+        li.appendChild(document.createTextNode("to:"));
+        var to = document.createElement("input")
+        to.name = "to[]"
+        to.value = e.parentNode.getElementsByTagName("input")[1].value;
+        li.appendChild(to);
+        ul.appendChild(li);
+        // clear values
+        e.parentNode.getElementsByTagName("input")[0].value = "";
+        e.parentNode.getElementsByTagName("input")[1].value = "";
+        // alert user
+        window.alert("dont forget to save!");
+    }
+    return false;
+}
+</script>
+</head>
+<body>
+
+<h1>manage redirects</h1>
+<p><strong>good guy cms</strong>: no auth. no validation. no sanitising...</p>
+
+<h2>list</h2>
+<form method="post" action="">
+<ul id="redirectsList">
+    {{ range $from, $to := .Redirects }}
+    <li>
+        from:<input type="text" value="{{$from}}" name="from[]" />
+        to:<input type="text" value="{{$to}}" name="to[]" />
+        <a href="#rmv" onclick="return removeRedirect(this);">remove</a>
+    </li>
+    {{ end }}
+</ul>
+<input type="submit" name="submit_btn" value="save" />
+</form>
+
+<h2>add</h2>
+<ul>
+    <li>
+        <label>from:</label><input type="text" value="" name="from" />
+        <label>to:</label><input type="text" value="" name="to" />
+        <a href="#add" onclick="return addRedirect(this);">add</a>
+    </li>
+</ul>
+
+</body>
+</html>
+{{end}}
