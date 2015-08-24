@@ -1,0 +1,50 @@
+How-To-Go Lab
+15:04 2 Jan 2006
+Tags: golang, lab, gdg
+
+Speakers (GDG Belfast)
+
+- Peter McConnell
+- Simon Hewitt
+
+* What are we building?
+
+Building a small & useful app written in Go.
+
+Simple proxy with an admin interface
+
+Demo time
+
+The code for this project can be found at:
+
+.link https://github.com/gdg-belfast/HowToGoLab
+
+* Environment setup
+
+First - make sure you have installed everything:
+
+.link https://golang.org/doc/install golang
+
+Second, tweak your environment:
+
+- mkdir -p ~/gocode
+- export GOPATH=~/gocode
+
+* Ready to code
+
+Create ~/gocode/github.com/<username>/golangtest/redirector.go
+
+Insert the following:
+
+.play gofiles/step_01.go /^func main/,/^}/
+
+Now lets build our app with:
+
+- go build
+
+And run it with
+
+- ./redirector
+
+
+
