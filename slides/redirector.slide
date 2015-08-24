@@ -1,5 +1,5 @@
 How-To-Go Lab
-15:04 2 Jan 2006
+15:04 25 Aug 2015
 Tags: golang, lab, gdg
 
 Speakers (GDG Belfast)
@@ -23,7 +23,8 @@ The code for this project can be found at:
 
 First - make sure you have installed everything:
 
-.link https://golang.org/doc/install golang
+.link https://git-scm.com/book/en/v2/Getting-Started-Installing-Git install git
+.link https://golang.org/doc/install golang (https://golang.org/doc/install)
 
 Second, tweak your environment:
 
@@ -36,7 +37,7 @@ Create ~/gocode/github.com/<username>/golangtest/redirector.go
 
 Insert the following:
 
-.play gofiles/step_01.go /^func main/,/^}/
+.play gofiles/step_01.go
 
 Now lets build our app with:
 
@@ -45,6 +46,24 @@ Now lets build our app with:
 And run it with
 
 - ./redirector
+
+* Run a webserver
+
+.play gofiles/step_02.go
+
+* Add a proxy
+
+Create ~/gocode/github.com/<username>/golangtest/proxy/proxy.go
+
+.code gofiles/step_03.go
+
+test! everyone should get a "{ StatusCode: 0 }"
+
+* Lets beef up the handler!
+
+.code gofiles/step_04.go /^func handler/,/^}/
+
+
 
 
 
